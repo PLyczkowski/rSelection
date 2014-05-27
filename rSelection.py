@@ -28,6 +28,17 @@ bl_info = {
     "category": "3D View"}
 
 import bpy
+
+addon_keymaps = []
+
+def kmi_props_setattr(kmi_props, attr, value):
+    try:
+        setattr(kmi_props, attr, value)
+    except AttributeError:
+        print("Warning: property '%s' not found in keymap item '%s'" %
+              (attr, kmi_props.__class__.__name__))
+    except Exception as e:
+        print("Warning: %r" % e)
         
 #------------------- REGISTER ------------------------------     
 
@@ -45,11 +56,11 @@ def register():
 
     #Element Select Modes
     kmi = km.keymap_items.new('mesh.select_mode', 'ONE', 'PRESS')
-    kmi.properties.type = 'VERT'
+    kmi_props_setattr(kmi.properties, 'type', 'VERT')
     kmi = km.keymap_items.new('mesh.select_mode', 'TWO', 'PRESS')
-    kmi.properties.type = 'EDGE'
+    kmi_props_setattr(kmi.properties, 'type', 'EDGE')
     kmi = km.keymap_items.new('mesh.select_mode', 'THREE', 'PRESS')
-    kmi.properties.type = 'FACE'
+    kmi_props_setattr(kmi.properties, 'type', 'FACE')
     
     #----OBJECT MODE----
     
@@ -120,7 +131,7 @@ def register():
     kmi_props_setattr(kmi.properties, 'extend', False)
 
     # Map Gesture Border
-    km = kc.keymaps.new('Gesture Border', space_type='EMPTY', region_type='WINDOW', modal=True)
+    km = bpy.context.window_manager.keyconfigs.addon.keymaps.new('Gesture Border', space_type='EMPTY', region_type='WINDOW', modal=True)
 
     kmi = km.keymap_items.new_modal('CANCEL', 'ESC', 'PRESS', any=True)
     kmi = km.keymap_items.new_modal('BEGIN', 'LEFTMOUSE', 'PRESS')
@@ -141,6 +152,7 @@ def unregister():
 if __name__ == "__main__":
     register()
     
+
 
 
 
