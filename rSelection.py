@@ -20,7 +20,7 @@ bl_info = {
     "name": "rSelection",
     "author": "Paweł Łyczkowski",
     "version": (0.1),
-    "blender": (2, 71, 0),
+    "blender": (2, 70, 0),
     "location": "View3D",
     "description": "Modifies the selection method.",
     "warning": "",
@@ -44,12 +44,12 @@ def kmi_props_setattr(kmi_props, attr, value):
 
 def register():
     
-    # Set LMB selection
+    # Set Preferences
     bpy.context.user_preferences.inputs.select_mouse = 'LEFT'
 
     #----KEYMAP----
     wm = bpy.context.window_manager
-    
+   
     #----EDIT MODE----
     
     km = wm.keyconfigs.addon.keymaps.new(name='Edit Mode', space_type='EMPTY')
@@ -63,6 +63,11 @@ def register():
     kmi_props_setattr(kmi.properties, 'type', 'FACE')
     
     #----OBJECT MODE----
+    
+#    km = bpy.context.window_manager.keyconfigs.addon.keymaps.new('Object Mode', space_type='EMPTY', region_type='WINDOW', modal=False)
+#    
+#    kmi = km.keymap_items.new('object.select_all', 'LEFTMOUSE', 'CLICK')
+#    kmi.properties.action = 'DESELECT'
     
     km = bpy.context.window_manager.keyconfigs.addon.keymaps.new("3D View", space_type="VIEW_3D")
     
@@ -139,7 +144,6 @@ def register():
     kmi = km.keymap_items.new_modal('SELECT', 'LEFTMOUSE', 'RELEASE', shift=True)
     kmi = km.keymap_items.new_modal('DESELECT', 'LEFTMOUSE', 'RELEASE', ctrl=True)
     
-    
     addon_keymaps.append(km)
 
 
@@ -152,6 +156,9 @@ def unregister():
 if __name__ == "__main__":
     register()
     
+
+
+
 
 
 
