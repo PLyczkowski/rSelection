@@ -17,8 +17,7 @@
 # ##### END GPL LICENSE BLOCK #####
 
 bl_info = {
-    "name": "r
-    selection",
+    "name": "rSelection",
     "author": "Paweł Łyczkowski",
     "version": (0.1),
     "blender": (2, 71, 0),
@@ -35,7 +34,10 @@ import bpy
 def register():
 
     wm = bpy.context.window_manager
-    km = wm.keyconfigs.addon.keymaps.new(name='Object Mode', space_type='EMPTY')
+    
+    #----EDIT MODE----
+    
+    km = wm.keyconfigs.addon.keymaps.new(name='Edit Mode', space_type='EMPTY')
 
     #Element Select Modes
     kmi = km.keymap_items.new('mesh.select_mode', 'ONE', 'PRESS')
@@ -45,7 +47,10 @@ def register():
     kmi = km.keymap_items.new('mesh.select_mode', 'THREE', 'PRESS')
     kmi_props_setattr(kmi.properties, 'type', 'FACE')
     
-    #
+    #----OBJECT MODE----
+    
+    km = wm.keyconfigs.addon.keymaps.new(name='Object Mode', space_type='EMPTY')
+    
     kmi = km.keymap_items.new('view3d.select', 'LEFTMOUSE', 'PRESS')
     kmi_props_setattr(kmi.properties, 'extend', False)
     kmi_props_setattr(kmi.properties, 'deselect', False)
