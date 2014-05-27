@@ -32,7 +32,11 @@ import bpy
 #------------------- REGISTER ------------------------------     
 
 def register():
+    
+    # Set LMB selection
+    bpy.context.user_preferences.inputs.select_mouse = 'LEFT'
 
+    #----KEYMAP----
     wm = bpy.context.window_manager
     
     #----EDIT MODE----
@@ -41,15 +45,15 @@ def register():
 
     #Element Select Modes
     kmi = km.keymap_items.new('mesh.select_mode', 'ONE', 'PRESS')
-    kmi_props_setattr(kmi.properties, 'type', 'VERT')
+    kmi.properties.type = 'VERT'
     kmi = km.keymap_items.new('mesh.select_mode', 'TWO', 'PRESS')
-    kmi_props_setattr(kmi.properties, 'type', 'EDGE')
+    kmi.properties.type = 'EDGE'
     kmi = km.keymap_items.new('mesh.select_mode', 'THREE', 'PRESS')
-    kmi_props_setattr(kmi.properties, 'type', 'FACE')
+    kmi.properties.type = 'FACE'
     
     #----OBJECT MODE----
     
-    km = wm.keyconfigs.addon.keymaps.new(name='Object Mode', space_type='EMPTY')
+    km = bpy.context.window_manager.keyconfigs.addon.keymaps.new("3D View", space_type="VIEW_3D")
     
     kmi = km.keymap_items.new('view3d.select', 'LEFTMOUSE', 'PRESS')
     kmi_props_setattr(kmi.properties, 'extend', False)
