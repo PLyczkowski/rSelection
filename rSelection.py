@@ -67,6 +67,12 @@ def register():
     kmi_props_setattr(kmi.properties, 'type', 'EDGE')
     kmi = km.keymap_items.new('mesh.select_mode', 'THREE', 'PRESS')
     kmi_props_setattr(kmi.properties, 'type', 'FACE')
+
+    #Select Linked
+    kmi = km.keymap_items.new('mesh.select_linked_pick', 'SELECTMOUSE', 'DOUBLE_CLICK')
+    kmi_props_setattr(kmi.properties, 'limit', True)
+    kmi = km.keymap_items.new('mesh.select_linked_pick', 'SELECTMOUSE', 'DOUBLE_CLICK', shift=True)
+    kmi_props_setattr(kmi.properties, 'limit', True)
     
     #----OBJECT MODE----
 
