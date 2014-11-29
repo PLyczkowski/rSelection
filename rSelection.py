@@ -59,6 +59,7 @@ def register():
     #----EDIT MODE----
     
     km = wm.keyconfigs.addon.keymaps.new('Mesh', space_type='EMPTY', region_type='WINDOW', modal=False)
+    addon_keymaps.append(km)
 
     #Element Select Modes
     kmi = km.keymap_items.new('mesh.select_mode', 'ONE', 'PRESS')
@@ -71,13 +72,19 @@ def register():
     #Select Linked
     kmi = km.keymap_items.new('mesh.select_linked_pick', 'SELECTMOUSE', 'DOUBLE_CLICK')
     kmi_props_setattr(kmi.properties, 'limit', True)
+    kmi_props_setattr(kmi.properties, 'deselect', False)
     kmi = km.keymap_items.new('mesh.select_linked_pick', 'SELECTMOUSE', 'DOUBLE_CLICK', shift=True)
     kmi_props_setattr(kmi.properties, 'limit', True)
+    kmi_props_setattr(kmi.properties, 'deselect', False)
+    kmi = km.keymap_items.new('mesh.select_linked_pick', 'SELECTMOUSE', 'DOUBLE_CLICK', ctrl=True)
+    kmi_props_setattr(kmi.properties, 'limit', True)
+    kmi_props_setattr(kmi.properties, 'deselect', True)
     
     #----OBJECT MODE----
 
     km = bpy.context.window_manager.keyconfigs.addon.keymaps.new('3D View', space_type='VIEW_3D', region_type='WINDOW', modal=False)
-    
+    addon_keymaps.append(km)
+
     kmi = km.keymap_items.new('view3d.select_or_deselect_all', 'SELECTMOUSE', 'PRESS')
     kmi_props_setattr(kmi.properties, 'extend', False)
     kmi_props_setattr(kmi.properties, 'deselect', False)
@@ -166,7 +173,7 @@ def unregister():
     wm = bpy.context.window_manager
     for km in addon_keymaps:
         wm.keyconfigs.addon.keymaps.remove(km)
-
+    addon_keymaps.clear()
 
     if True:
             view3d_km_items = wm.keyconfigs.default.keymaps['3D View'].keymap_items
