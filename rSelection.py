@@ -49,10 +49,16 @@ def register():
 
     #----KEYMAP----
     wm = bpy.context.window_manager
+
+    if True:
+            view3d_km_items = wm.keyconfigs.default.keymaps['3D View'].keymap_items
+            for j in view3d_km_items:
+                if j.name == 'Activate/Select':
+                   j.active = False
    
     #----EDIT MODE----
     
-    km = wm.keyconfigs.addon.keymaps.new(name='Edit Mode', space_type='EMPTY')
+    km = wm.keyconfigs.addon.keymaps.new('Mesh', space_type='EMPTY', region_type='WINDOW', modal=False)
 
     #Element Select Modes
     kmi = km.keymap_items.new('mesh.select_mode', 'ONE', 'PRESS')
@@ -63,15 +69,10 @@ def register():
     kmi_props_setattr(kmi.properties, 'type', 'FACE')
     
     #----OBJECT MODE----
+
+    km = bpy.context.window_manager.keyconfigs.addon.keymaps.new('3D View', space_type='VIEW_3D', region_type='WINDOW', modal=False)
     
-#    km = bpy.context.window_manager.keyconfigs.addon.keymaps.new('Object Mode', space_type='EMPTY', region_type='WINDOW', modal=False)
-#    
-#    kmi = km.keymap_items.new('object.select_all', 'LEFTMOUSE', 'CLICK')
-#    kmi.properties.action = 'DESELECT'
-    
-    km = bpy.context.window_manager.keyconfigs.addon.keymaps.new("3D View", space_type="VIEW_3D")
-    
-    kmi = km.keymap_items.new('view3d.select', 'SELECTMOUSE', 'PRESS')
+    kmi = km.keymap_items.new('view3d.select_or_deselect_all', 'SELECTMOUSE', 'PRESS')
     kmi_props_setattr(kmi.properties, 'extend', False)
     kmi_props_setattr(kmi.properties, 'deselect', False)
     kmi_props_setattr(kmi.properties, 'toggle', False)
@@ -79,7 +80,7 @@ def register():
     kmi_props_setattr(kmi.properties, 'enumerate', False)
     kmi_props_setattr(kmi.properties, 'object', False)
     
-    kmi = km.keymap_items.new('view3d.select', 'SELECTMOUSE', 'PRESS', shift=True)
+    kmi = km.keymap_items.new('view3d.select_or_deselect_all', 'SELECTMOUSE', 'PRESS', shift=True)
     kmi_props_setattr(kmi.properties, 'extend', False)
     kmi_props_setattr(kmi.properties, 'deselect', False)
     kmi_props_setattr(kmi.properties, 'toggle', True)
@@ -87,15 +88,15 @@ def register():
     kmi_props_setattr(kmi.properties, 'enumerate', False)
     kmi_props_setattr(kmi.properties, 'object', False)
     
-    kmi = km.keymap_items.new('view3d.select', 'SELECTMOUSE', 'PRESS', ctrl=True)
+    kmi = km.keymap_items.new('view3d.select_or_deselect_all', 'SELECTMOUSE', 'PRESS', ctrl=True)
     kmi_props_setattr(kmi.properties, 'extend', False)
-    kmi_props_setattr(kmi.properties, 'deselect', False)
+    kmi_props_setattr(kmi.properties, 'deselect', True)
     kmi_props_setattr(kmi.properties, 'toggle', False)
-    kmi_props_setattr(kmi.properties, 'center', True)
+    kmi_props_setattr(kmi.properties, 'center', False)
     kmi_props_setattr(kmi.properties, 'enumerate', False)
-    kmi_props_setattr(kmi.properties, 'object', True)
+    kmi_props_setattr(kmi.properties, 'object', False)
     
-    kmi = km.keymap_items.new('view3d.select', 'SELECTMOUSE', 'PRESS', alt=True)
+    kmi = km.keymap_items.new('view3d.select_or_deselect_all', 'SELECTMOUSE', 'PRESS', alt=True)
     kmi_props_setattr(kmi.properties, 'extend', False)
     kmi_props_setattr(kmi.properties, 'deselect', False)
     kmi_props_setattr(kmi.properties, 'toggle', False)
@@ -103,7 +104,7 @@ def register():
     kmi_props_setattr(kmi.properties, 'enumerate', True)
     kmi_props_setattr(kmi.properties, 'object', False)
     
-    kmi = km.keymap_items.new('view3d.select', 'SELECTMOUSE', 'PRESS', shift=True, ctrl=True)
+    kmi = km.keymap_items.new('view3d.select_or_deselect_all', 'SELECTMOUSE', 'PRESS', shift=True, ctrl=True)
     kmi_props_setattr(kmi.properties, 'extend', True)
     kmi_props_setattr(kmi.properties, 'deselect', False)
     kmi_props_setattr(kmi.properties, 'toggle', True)
@@ -111,7 +112,7 @@ def register():
     kmi_props_setattr(kmi.properties, 'enumerate', False)
     kmi_props_setattr(kmi.properties, 'object', False)
     
-    kmi = km.keymap_items.new('view3d.select', 'SELECTMOUSE', 'PRESS', ctrl=True, alt=True)
+    kmi = km.keymap_items.new('view3d.select_or_deselect_all', 'SELECTMOUSE', 'PRESS', ctrl=True, alt=True)
     kmi_props_setattr(kmi.properties, 'extend', False)
     kmi_props_setattr(kmi.properties, 'deselect', False)
     kmi_props_setattr(kmi.properties, 'toggle', False)
@@ -119,7 +120,7 @@ def register():
     kmi_props_setattr(kmi.properties, 'enumerate', True)
     kmi_props_setattr(kmi.properties, 'object', False)
     
-    kmi = km.keymap_items.new('view3d.select', 'SELECTMOUSE', 'PRESS', shift=True, alt=True)
+    kmi = km.keymap_items.new('view3d.select_or_deselect_all', 'SELECTMOUSE', 'PRESS', shift=True, alt=True)
     kmi_props_setattr(kmi.properties, 'extend', False)
     kmi_props_setattr(kmi.properties, 'deselect', False)
     kmi_props_setattr(kmi.properties, 'toggle', True)
@@ -127,7 +128,7 @@ def register():
     kmi_props_setattr(kmi.properties, 'enumerate', True)
     kmi_props_setattr(kmi.properties, 'object', False)
     
-    kmi = km.keymap_items.new('view3d.select', 'SELECTMOUSE', 'PRESS', shift=True, ctrl=True, alt=True)
+    kmi = km.keymap_items.new('view3d.select_or_deselect_all', 'SELECTMOUSE', 'PRESS', shift=True, ctrl=True, alt=True)
     kmi_props_setattr(kmi.properties, 'extend', False)
     kmi_props_setattr(kmi.properties, 'deselect', False)
     kmi_props_setattr(kmi.properties, 'toggle', True)
@@ -159,15 +160,13 @@ def unregister():
     wm = bpy.context.window_manager
     for km in addon_keymaps:
         wm.keyconfigs.addon.keymaps.remove(km)
+
+
+    if True:
+            view3d_km_items = wm.keyconfigs.default.keymaps['3D View'].keymap_items
+            for j in view3d_km_items:
+                if j.name == 'Activate/Select':
+                   j.active = True
         
 if __name__ == "__main__":
     register()
-    
-
-
-
-
-
-
-
-
