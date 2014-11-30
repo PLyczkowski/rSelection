@@ -19,7 +19,7 @@
 bl_info = {
     "name": "rSelection",
     "author": "Paweł Łyczkowski",
-    "version": (0.1),
+    "version": (0, 1),
     "blender": (2, 70, 0),
     "location": "View3D",
     "description": "Modifies the selection method.",
